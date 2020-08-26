@@ -9,7 +9,7 @@
 </head>
 <body>
 <p>Navigation: <a href="/party">Parties</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/review-page">Review Options</a></p>
-<h3>Pizza Options</h3>
+<h3>Pizza Options for Party:</h3>
 <form action="/add-page" method="post">
 <table class="table">
 			<tr>
@@ -20,7 +20,7 @@
 				<td>${partyOption.name}</td>
 				<td>${partyOption.description}</td>
 				<td>${partyOption.votes}</td><td>
-				<a href="/vote-update?id=${partyOption.id}">Vote!</a></td>
+				<a href="/vote-update?id=${partyOption.id}">Votes!</a></td>
 			</tr>
 			</c:forEach>
 			</table>

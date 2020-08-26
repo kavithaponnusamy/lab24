@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +20,10 @@ public class PartyOption {
 	public PartyOption() {
 		super();
 	}
+	@ManyToOne
+	@JoinColumn(name="party_id")
+	private Party party;
+	
 	public PartyOption(Long id, String name, String description, Integer votes) {
 		super();
 		this.id = id;

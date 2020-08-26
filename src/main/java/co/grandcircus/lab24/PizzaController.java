@@ -1,16 +1,20 @@
 package co.grandcircus.lab24;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sun.el.stream.Optional;
+
+
 
 @Controller
 public class PizzaController {
@@ -22,14 +26,20 @@ public class PizzaController {
 	@Autowired
 	private PartyOptionRepo dao2;
 	
+
+	@Autowired
+	private RsvpRepo dao3;
+	
 	@RequestMapping("/")
 	public String index() {
 		return "redirect:/party";
 	}
 	@RequestMapping("/party")
 	public String home(Model model, String name) {
-		List<Party> parties = dao.findAll();		
+		List<Party> parties = dao.findAll();
+		List<Rsvp> rsvps = dao3.findAll();
 		model.addAttribute("parties",parties);
+		model.addAttribute("rsvps",rsvps);
 		return "homepage";
 	}
 	@PostMapping("/party")
@@ -50,18 +60,19 @@ public class PizzaController {
 		PartyOption resultPartyOption = dao2.findById(id).get();
 		resultPartyOption.setVotes(resultPartyOption.getVotes()+1);
 		dao2.save(resultPartyOption);
-		//List<PartyOption> partyOptions1 = dao2.findAll();
-		//model.addAttribute("partyOptions", partyOptions1);
-		model.addAttribute("partyOptions",resultPartyOption);
-		
+		model.addAttribute("partyOptions",resultPartyOption);		
 		return "redirect:/vote-page";		
+	}
+	@RequestMapping("/partyOption/{id}")
+	public String listPizzaOptions(Model model, @PathVariable("id") Long id){
+		List <PartyOption> resultPartyOption = dao2.findByPartyId(id);
+		model.addAttribute("partyOptions",resultPartyOption);		
+		return "vote-page";		
 	}
 	@RequestMapping("/add-page")
 	public String submitAdd(Model model, PartyOption pOption) {
 		pOption.setVotes(0);
 		dao2.save(pOption);
-		//List<PartyOption> partyOptions2 = dao2.findAll();
-		//model.addAttribute("partyOptions", partyOptions2);
 		model.addAttribute("partyOptions",pOption);
 		return "redirect:/vote-page";		
 	}
@@ -103,4 +114,18 @@ public class PizzaController {
 		dao.deleteById(id);		
 		return "redirect:/admin-page";
 	}
+	@RequestMapping("/rsvp-submit")
+	public String rsvpSubmit(Model model,Rsvp rsvp) {
+		dao3.save(rsvp);		
+		return "redirect:/party";
+	}
+	@RequestMapping("/rsvp/{id}")
+	public String listPartyDetails(Model model, @PathVariable("id") Long id){
+		Party party=dao.findById(id).get();
+		model.addAttribute("party",party);
+		List <Rsvp> rsvps = dao3.findByPartyId(id);
+		model.addAttribute("rsvps",rsvps);		
+		return "party-details";
+		}
+		
 }

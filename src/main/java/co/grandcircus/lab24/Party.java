@@ -2,11 +2,14 @@ package co.grandcircus.lab24;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 @Entity
@@ -16,6 +19,9 @@ public class Party {
 	private String name;
 	@DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
 	private LocalDate date;
+	
+	@OneToMany(mappedBy="party")
+	private Set<Rsvp> rsvp;
 	public Party() {
 		super();
 	}
@@ -24,6 +30,13 @@ public class Party {
 		this.id = id;
 		this.name = name;
 		this.date = date;
+	}
+	
+	public Set<Rsvp> getRsvp() {
+		return rsvp;
+	}
+	public void setRsvp(Set<Rsvp> rsvp) {
+		this.rsvp = rsvp;
 	}
 	public Long getId() {
 		return id;
