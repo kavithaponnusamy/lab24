@@ -9,7 +9,7 @@
 </head>
 <body>
 <p>Navigation: <a href="/party">Parties</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/review-page">Review Options</a></p>
-<h3>Parties</h3>
+<h3>Pizza Options</h3>
 <form action="/add-page" method="post">
 <table class="table">
 			<tr>

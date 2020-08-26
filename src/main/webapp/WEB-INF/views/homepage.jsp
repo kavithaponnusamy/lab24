@@ -8,9 +8,14 @@
 <title>Home Page</title>
 </head>
 <body>
-<p>Navigation: <a href="/vote-page">Options & Votes</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/review-page">Review Options</a></p>
+<p>Navigation: <a href="/vote-page">Options & Votes</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/review-page">Review Options</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="/admin-page">Admin</a></p>
 <h3>Parties</h3>
-
+<form action="/party" method="post">
+<h4>Search</h4>
+By Name<input type="text" name="name">&nbsp;&nbsp;&nbsp;<button type="submit">Search</button>
+</form>
+<p> </p>
 <table class="table">
 			<tr>
 			<th>Name</th><th>Date</th>
@@ -22,5 +27,7 @@
 			</tr>
 			</c:forEach>
 			</table>
+
+
 </body>
 </html>
